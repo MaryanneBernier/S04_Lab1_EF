@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZombieParty.Models.Data;
 
@@ -10,9 +11,11 @@ using ZombieParty.Models.Data;
 namespace ZombieParty.Migrations
 {
     [DbContext(typeof(ZombiePartyDbContext))]
-    partial class ZombiePartyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260904211756_AjoutHuntingLog")]
+    partial class AjoutHuntingLog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace ZombieParty.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("HuntingLogZombie", b =>
-                {
-                    b.Property<int>("HuntingLogsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ZombiesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("HuntingLogsId", "ZombiesId");
-
-                    b.HasIndex("ZombiesId");
-
-                    b.ToTable("HuntingLogZombie");
-                });
-
             modelBuilder.Entity("ZombieParty.Models.HuntingLog", b =>
                 {
                     b.Property<int>("Id")
@@ -43,16 +31,6 @@ namespace ZombieParty.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
 
                     b.HasKey("Id");
 
@@ -108,21 +86,6 @@ namespace ZombieParty.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ZombieTypes");
-                });
-
-            modelBuilder.Entity("HuntingLogZombie", b =>
-                {
-                    b.HasOne("ZombieParty.Models.HuntingLog", null)
-                        .WithMany()
-                        .HasForeignKey("HuntingLogsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ZombieParty.Models.Zombie", null)
-                        .WithMany()
-                        .HasForeignKey("ZombiesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("ZombieParty.Models.Zombie", b =>
